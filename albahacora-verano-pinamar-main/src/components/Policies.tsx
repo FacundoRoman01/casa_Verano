@@ -26,7 +26,7 @@ const Policies = () => {
     {
       icon: <Shield size={24} />,
       title: "Zona Segura",
-      description: "Barrio residencial muy seguro con vigilancia y tranquilidad garantizada.",
+      description: "Barrio residencial muy seguro y tranquilidad garantizada.",
     },
     {
       icon: <PawPrint size={24} />,

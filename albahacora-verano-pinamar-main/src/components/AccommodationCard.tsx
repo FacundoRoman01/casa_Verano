@@ -26,6 +26,8 @@ const AccommodationCard = ({
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  const hasMultipleImages = images && images.length > 1; // <-- Nueva variable para control
+
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
   }, [emblaApi]);
@@ -50,52 +52,65 @@ const AccommodationCard = ({
 
   return (
     <Card className="overflow-hidden hover:shadow-xl transition-shadow duration-300 border-border/50">
+      {/* Contenedor principal con Aspect Ratio Fijo */}
       <div className="relative aspect-[4/3] overflow-hidden group">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex">
+        {/* Carrusel de Embla */}
+        <div className="overflow-hidden h-full" ref={emblaRef}> 
+          <div className="flex h-full"> 
             {images.map((image, index) => (
-              <div key={index} className="flex-[0_0_100%] min-w-0">
+              // Contenedor de cada imagen (debe tener altura completa)
+              <div key={index} className="flex-[0_0_100%] min-w-0 h-full"> 
                 <img
                   src={image}
                   alt={`${title} - imagen ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  // Estilos clave: w-full, h-full, object-cover
+                  className="w-full h-full object-cover" 
+                  loading="lazy" // Carga perezosa
                 />
               </div>
             ))}
           </div>
         </div>
         
-        {/* Botones de navegación */}
+        {/* Botones de navegación - Visibles en hover y deshabilitados si solo hay 1 imagen */}
         <button
           onClick={scrollPrev}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          disabled={!hasMultipleImages}
+          className={`absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground rounded-full p-2 transition-opacity ${
+              hasMultipleImages ? "opacity-0 group-hover:opacity-100" : "opacity-0 cursor-default"
+          }`}
           aria-label="Imagen anterior"
         >
           <ChevronLeft size={20} />
         </button>
         <button
           onClick={scrollNext}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity"
+          disabled={!hasMultipleImages}
+          className={`absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground rounded-full p-2 transition-opacity ${
+              hasMultipleImages ? "opacity-0 group-hover:opacity-100" : "opacity-0 cursor-default"
+          }`}
           aria-label="Imagen siguiente"
         >
           <ChevronRight size={20} />
         </button>
 
-        {/* Dots indicadores */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => emblaApi?.scrollTo(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === selectedIndex
-                  ? "bg-background w-6"
-                  : "bg-background/50 hover:bg-background/70"
-              }`}
-              aria-label={`Ir a imagen ${index + 1}`}
-            />
-          ))}
-        </div>
+        {/* Dots indicadores - Solo se muestran si hay más de 1 imagen */}
+        {hasMultipleImages && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => emblaApi?.scrollTo(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === selectedIndex
+                    ? "bg-background w-6"
+                    : "bg-background/50 hover:bg-background/70"
+                }`}
+                aria-label={`Ir a imagen ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <CardHeader>
         <div className="flex items-start justify-between">
