@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Beach & Nature Inspired Palette */
+    --background: 36 33% 97%;
+    --foreground: 25 25% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 25 25% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 25% 20%;
+
+    /* Ocean blue - primary color */
+    --primary: 200 70% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Warm sand - secondary */
+    --secondary: 36 40% 88%;
+    --secondary-foreground: 25 25% 20%;
+
+    /* Muted earth tones */
+    --muted: 36 25% 92%;
+    --muted-foreground: 25 15% 45%;
+
+    /* Terracotta accent */
+    --accent: 14 65% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 36 20% 88%;
+    --input: 36 20% 88%;
+    --ring: 200 70% 45%;
+
+    --radius: 0.75rem;
+
+    /* Gradients for hero sections */
+    --gradient-overlay: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4));
+    --gradient-subtle: linear-gradient(180deg, hsl(36 33% 97%), hsl(200 40% 96%));
+    
+    /* Shadows */
+    --shadow-elegant: 0 4px 20px -4px rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 25 30% 12%;
+    --foreground: 36 33% 97%;
+
+    --card: 25 25% 16%;
+    --card-foreground: 36 33% 97%;
+
+    --popover: 25 25% 16%;
+    --popover-foreground: 36 33% 97%;
+
+    --primary: 200 65% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 25 20% 22%;
+    --secondary-foreground: 36 33% 97%;
+
+    --muted: 25 20% 22%;
+    --muted-foreground: 36 15% 65%;
+
+    --accent: 14 65% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 25 20% 22%;
+    --input: 25 20% 22%;
+    --ring: 200 65% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 400;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .gradient-overlay {
+    background: var(--gradient-overlay);
+  }
+}
